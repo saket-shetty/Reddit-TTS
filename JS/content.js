@@ -1,4 +1,4 @@
-setInterval(mainFun, 2000);
+setInterval(mainFun, 500);
 
 function mainFun() {
     var data = document.getElementsByTagName("P");
