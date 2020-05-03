@@ -1,19 +1,26 @@
-setInterval(mainFun, 500);
+mainFunction();
 
-function mainFun() {
-    var data = document.getElementsByTagName("P");
+async function mainFunction(){
+    let domObject = document.getElementsByTagName("P");
     var topic = document.getElementsByClassName("_eYtD2XCVieq6emjKBH3m");
-    myFunction(topic[0].innerHTML);
-    for (var x = 0; x < data.length; x++) {
-        document.getElementsByClassName('Nb7NCPTlQuxN_WDPUg5Q2')[0].click();
-        var comments = data[x].innerHTML;
-        if(!comments.includes("more reply") && !comments.includes("more replies")){
-            myFunction(data[x].innerHTML);
+    myFunction(0, topic[0].innerHTML);
+    for(var i=0; i<domObject.length; i++){
+        let message = domObject[i].innerHTML;
+        if(i != 0){
+            document.getElementsByTagName("P")[i-1].style.color = 'white';
+        }
+        if(!message.includes("more replies") && !message.includes("more reply")){
+            await myFunction(i, message);
         }
     }
 }
 
-function myFunction(element) {
-    var msg = new SpeechSynthesisUtterance(element);
-    window.speechSynthesis.speak(msg);
+async function myFunction(index, message) {
+    let audio = new SpeechSynthesisUtterance(message);
+    synth = window.speechSynthesis;
+    synth.speak(audio);
+    document.getElementsByTagName("P")[index].style.color = 'red';
+    return new Promise(resolve => {
+        audio.onend = resolve;
+    });
 }
